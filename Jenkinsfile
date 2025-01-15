@@ -22,7 +22,7 @@ pipeline {
                        docker build -t tishadev/time-app-frontend .
                        echo "Building the application backend_$BRANCH_NAME"
                        cd ../api
-                       docker build -t tishadev/tishadev/time-app-api .
+                       docker build -t tishadev/time-app-api .
                     '''
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
                 script{
                      sh "echo $PASS | docker login -u $USER --password-stdin"
                      sh 'docker push tishadev/time-app-frontend'
-                     sh 'docker push tishadev/tishadev/time-app-api'
+                     sh 'docker push tishadev/time-app-api'
                 }
             }
         }
