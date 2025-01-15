@@ -65,9 +65,7 @@ pipeline {
                         echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
                         '''
                     sshagent(['ec2-server-key']) {
-                        sh '''
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} $cmd
-                        '''
+                        sh "ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} $cmd"
                     }
                 }
             }
