@@ -7,7 +7,7 @@ pipeline {
                 echo "Executing pipeline for branch $BRANCH_NAME"
             }
         }
-
+        /*
         stage('### build ###') {
             when {
                 expression {
@@ -27,7 +27,7 @@ pipeline {
                 }
             }
         }
-
+       
         stage('### pusching images to repo ###'){
             when {
                 expression {
@@ -46,7 +46,7 @@ pipeline {
                 }
             }
 
-        }
+        } */
         stage('deploy to prod') {
             when {
                 expression {
