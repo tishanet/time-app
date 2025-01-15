@@ -58,9 +58,9 @@ pipeline {
                 script {
                     def cmd = 'ls -la'
                     sshagent(['ec2-server-key']) {
-                        sh'''
+                        sh"""
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} $cmd
-                        '''    
+                        """    
                     }
                 }
             }
