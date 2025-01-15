@@ -58,6 +58,7 @@ pipeline {
                 script {
                     sshagent(['ec2-server-key']) {
                         sh '''
+                            #!/bin/bash
                             echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
                             echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
                             echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
