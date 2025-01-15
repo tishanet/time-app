@@ -66,7 +66,6 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
                             scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
-                            scp $WORKSPACE/docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
                         """    
                     }
                 }
