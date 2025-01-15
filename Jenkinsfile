@@ -57,21 +57,20 @@ pipeline {
                 echo "Deploying the application $BRANCH_NAME"
                 script {
                     sshagent(['ec2-server-key']) {
-                        sh '''
-                        #!/bin/bash
-                        echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
-                        echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
-                        echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
-                        echo "MYSQL_PASSWORD=${env.MYSQL_PASSWORD}" >> .env
-                        echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
-                        '''
-                        /*sh '''
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "mkdir -p ~/app"
-                            scp ./.env ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            scp ./docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            scp ./scripts/run.sh ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "~/app/run.sh"
-                        '''*/
+                        sh"""
+                            rm -f .env
+                            echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
+                            echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
+                            echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
+                            echo "MYSQL_PASSWORD=${env.MYSQL_PASSWORD}" >> .env
+                            echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
+                            scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            scp $WORKSPACE/docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            scp $WORKSPACE/scripts/run.sh ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            
+                        """    
                     }
                 }
             }
