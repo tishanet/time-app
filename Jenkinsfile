@@ -58,8 +58,14 @@ pipeline {
                 script {
                     sshagent(['ec2-server-key']) {
                         sh"""
+                            echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
+                            echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
+                            echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
+                            echo "MYSQL_PASSWORD=${env.MYSQL_PASSWORD}" >> .env
+                            echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
+                            scp .env ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
                         """    
                     }
                 }
