@@ -65,7 +65,7 @@ pipeline {
                             echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
-                            scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:$HOME/app
+                            scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
                         """    
                     }
                 }
