@@ -1,13 +1,14 @@
 pipeline {
     agent any
     stages {
+        
         stage('### test ###') {
             steps {
                 echo "Testing the application"
                 echo "Executing pipeline for branch $BRANCH_NAME"
             }
         }
-        /*
+
         stage('### build ###') {
             when {
                 expression {
@@ -46,7 +47,7 @@ pipeline {
                 }
             }
 
-        } */
+        } 
         stage('deploy to prod') {
             when {
                 expression {
