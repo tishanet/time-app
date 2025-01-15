@@ -58,8 +58,8 @@ pipeline {
                 script {
                     sshagent(['ec2-server-key']) {
                         sh"""
-                            ssh -i .ssh/my-server.pem -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
-                            ssh -i .ssh/my-server.pem -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
                         """    
                     }
                 }
