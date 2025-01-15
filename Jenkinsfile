@@ -56,22 +56,18 @@ pipeline {
             steps {
                 echo "Deploying the application $BRANCH_NAME"
                 script {
-                    sshagent(['ec2-server-key']) {
-                        sh '''
-                        #!/bin/bash
+                    def cmd = 'mkdir ~/app'
+                    sh '''
                         echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
                         echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
                         echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
                         echo "MYSQL_PASSWORD=${env.MYSQL_PASSWORD}" >> .env
                         echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
                         '''
-                        /*sh '''
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "mkdir -p ~/app"
-                            scp ./.env ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            scp ./docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            scp ./scripts/run.sh ${env.REMOTE_USER}@${env.REMOTE_IP}:~/app
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "~/app/run.sh"
-                        '''*/
+                    sshagent(['ec2-server-key']) {
+                        sh '''
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} $cmd
+                        '''
                     }
                 }
             }
