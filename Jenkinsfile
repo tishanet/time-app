@@ -34,16 +34,17 @@ pipeline {
                     BRANCH_NAME == 'main'
                 }
             }
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                    script{
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    script {
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh 'docker push tishadev/time-app-frontend'
                         sh 'docker push tishadev/time-app-api'
                     }
+                }
             }
-        }
 
+        }
         stage('deploy to prod') {
             when {
                 expression {
