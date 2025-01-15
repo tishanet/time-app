@@ -57,13 +57,6 @@ pipeline {
                 echo "Deploying the application $BRANCH_NAME"
                 script {
                     def cmd = 'mkdir ~/app'
-                    sh '''
-                        echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
-                        echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
-                        echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
-                        echo "MYSQL_PASSWORD=${env.MYSQL_PASSWORD}" >> .env
-                        echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
-                        '''
                     sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} $cmd"
                     }
