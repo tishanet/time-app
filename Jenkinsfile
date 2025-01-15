@@ -56,10 +56,10 @@ pipeline {
             steps {
                 echo "Deploying the application $BRANCH_NAME"
                 script {
-                    //def cmd = 'ls -la'
                     sshagent(['ec2-server-key']) {
                         sh"""
-                            ssh -i .ssh/my-server.pem -o StrictHostKeyChecking=no ec2-user@34.229.74.48 "rm -rf ~/app"
+                            ssh -i .ssh/my-server.pem -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
+                            ssh -i .ssh/my-server.pem -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
                         """    
                     }
                 }
