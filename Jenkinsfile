@@ -58,6 +58,7 @@ pipeline {
                 script {
                     sshagent(['ec2-server-key']) {
                         sh"""
+                            rm -f .env
                             echo "MYSQL_HOST=${env.MYSQL_HOST}" >> .env
                             echo "MYSQL_PORT=${env.MYSQL_PORT}" >> .env
                             echo "MYSQL_USER=${env.MYSQL_USER}" >> .env
@@ -65,7 +66,10 @@ pipeline {
                             echo "MYSQL_DB=${env.MYSQL_DB}" >> .env
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "rm -rf ~/app"
                             ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "mkdir ~/app"
-                            scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app
+                            scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            scp $WORKSPACE/docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            scp $WORKSPACE/scripts/run.sh ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
+                            
                         """    
                     }
                 }
