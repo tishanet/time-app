@@ -69,7 +69,7 @@ pipeline {
                             scp $WORKSPACE/.env ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
                             scp $WORKSPACE/docker-compose-pub.yml ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
                             scp $WORKSPACE/scripts/run.sh ${env.REMOTE_USER}@${env.REMOTE_IP}:/home/ec2-user/app/
-                            
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} "bash /home/ec2-user/app/run.sh"
                         """    
                     }
                 }
