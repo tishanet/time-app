@@ -17,9 +17,9 @@ pipeline {
             steps {
                 script {
                     echo "Building the application frontend_$BRANCH_NAME"
-                    sh "docker build -t tishadev/time-app-frontend ./forntend/Dockerfile"
+                    sh "docker build -t tishadev/time-app-frontend -f ./forntend/Dockerfile"
                     echo "Building the application backend_$BRANCH_NAME"
-                    sh "docker build -t tishadev/tishadev/time-app-api ./api/Dockerfile"
+                    sh "docker build -t tishadev/tishadev/time-app-api -f ./api/Dockerfile"
                 }
             }
         }
