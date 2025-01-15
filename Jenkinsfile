@@ -59,7 +59,7 @@ pipeline {
                     //def cmd = 'ls -la'
                     sshagent(['ec2-server-key']) {
                         sh"""
-                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "mkdir -p ~/app"
+                            ssh -o StrictHostKeyChecking=no ${env.REMOTE_USER}@${env.REMOTE_IP} bash -c "mkdir ~/app"
                         """    
                     }
                 }
